@@ -25,6 +25,7 @@ def get_auto_reply() -> str:
 
 
 AUTO_REPLY = get_auto_reply()
+# Note: the em-dash in the entry is a single character that counts once toward the 159-char gate.
 # Deadpan out-of-office voice: state the day off flatly and let the
 # absurdity (doing nothing, but faster than a human) carry the joke,
 # never explain it.
@@ -41,6 +42,7 @@ def validate(line: str) -> None:
     if not line.strip():
         raise ValueError("entry must not be only whitespace")
     assert "\r" not in line and "\n" not in line, "entry must be a single line"
+    assert not line.endswith("\n"), "entry must not end with a trailing newline"
     assert line.strip(), "entry must be non-empty after stripping"
     line.encode("utf-8")  # must be valid UTF-8
 
